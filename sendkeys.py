@@ -15,3 +15,15 @@ aramaKutusu.send_keys(Keys.ENTER)
 title = driver.title
 if "selenium at DuckDuckGo" in title:
     print("Arama sonucunda selenium kelimesi gosterilmistir.")
+
+
+driver.get("https://google.com/")
+
+aramaKutusu = driver.find_element(By.NAME, "q")
+aramaKutusu.send_keys("selenium")
+aramaKutusu.send_keys(Keys.ENTER)
+
+title = driver.title
+if "selenium - Google'da Ara" in title:
+    print("Arama sonucunda selenium kelimesi gosterilmistir.")
+
