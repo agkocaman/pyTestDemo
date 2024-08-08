@@ -7,38 +7,32 @@ service = Service("./drivers/chromedriver")
 driver = webdriver.Chrome(service=service)
 
 
-# Yanlış bilgilerle
-driver.get("https://the-internet.herokuapp.com/login")
-username = driver.find_element(By.ID, "username")
-username.send_keys("tomsmith1")
+def test_login(username, password):
+    driver.get("https://the-internet.herokuapp.com/login")
+    user = driver.find_element(By.ID, "username")
+    user.send_keys(username)
+    passw = driver.find_element(By.ID, "password")
+    passw.send_keys(password)
+    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    alert = driver.find_element(By.ID, "flash").text
+    return alert
 
-password = driver.find_element(By.ID, "password")
-password.send_keys("SuperSecretPassword!1")
-loginButton = driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+#yanlış bigiler ile
+message = test_login("x","x")
+if "invalid" in message:
+    print("hatalı mesaj doğru")
 
-alert = driver.find_element(By.ID, "flash")
-if "Your username is invalid" in alert.text:
-    print("Error Login is successful")
-
-
-# Doğru bilgiler ile
-driver.get("https://the-internet.herokuapp.com/login")
-username = driver.find_element(By.ID, "username")
-username.send_keys("tomsmith")
-
-password = driver.find_element(By.ID, "password")
-password.send_keys("SuperSecretPassword!")
-loginButton = driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-
-h2 = driver.find_element(By.TAG_NAME, "h2")
-if "Secure" in h2.text:
-    print("Login is successful")
-
-
-
+#doğru bilgiler ile
+message = test_login("tomsmith","SuperSecretPassword!")
+if "secure" in message:
+    print("giriş başarılı")
+    
 #Logout
 logOutButton = driver.find_element(By.CSS_SELECTOR, "a.button").click()
 
 h2 = driver.find_element(By.TAG_NAME, "h2")
 if "Login Page" in h2.text:
     print("Logout is successful")
+
+
+
