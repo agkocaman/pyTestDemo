@@ -19,20 +19,16 @@ def test_login(username, password):
 
 #yanlış bigiler ile
 message = test_login("x","x")
-if "invalid" in message:
-    print("hatalı mesaj doğru")
+assert "invalid!" in message
 
 #doğru bilgiler ile
 message = test_login("tomsmith","SuperSecretPassword!")
-if "secure" in message:
-    print("giriş başarılı")
+assert "secure" in message
     
 #Logout
 logOutButton = driver.find_element(By.CSS_SELECTOR, "a.button").click()
-
 h2 = driver.find_element(By.TAG_NAME, "h2")
-if "Login Page" in h2.text:
-    print("Logout is successful")
+assert "Login Page" in h2.text
 
 
 
